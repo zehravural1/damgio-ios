@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Damgio - Dijital Damga Kartı</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f4f0;
+            color: #25251f;
+        }
+
+        .app {
+            width: 100%;
+            max-width: 390px;
+            min-height: 100vh;
+            margin: auto;
+            padding: 28px 22px;
+            background: #ffffff;
+        }
+
+        .brand {
+            font-size: 28px;
+            font-weight: bold;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            margin-top: 8px;
+            color: #77776f;
+            font-size: 14px;
+        }
+
+        .welcome {
+            margin-top: 38px;
+        }
+
+        .welcome h1 {
+            margin-bottom: 8px;
+            font-size: 26px;
+        }
+
+        .welcome p {
+            color: #77776f;
+            line-height: 1.5;
+        }
+
+        .card {
+            margin-top: 28px;
+            padding: 22px;
+            border-radius: 20px;
+            background: #243c32;
+            color: white;
+        }
+
+        .card-label {
+            font-size: 13px;
+            color: #d6e2d8;
+        }
+
+        .coffee-name {
+            margin-top: 10px;
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        .stamps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .stamp {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border: 1px solid #91a69a;
+            border-radius: 50%;
+            font-size: 20px;
+        }
+
+        .stamp.filled {
+            background: #d8e5bd;
+            border-color: #d8e5bd;
+            color: #243c32;
+        }
+
+        .progress {
+            margin-top: 20px;
+            font-size: 13px;
+            color: #e1e9e0;
+        }
+
+        .button {
+            display: block;
+            width: 100%;
+            margin-top: 24px;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: #d8e5bd;
+            color: #243c32;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .section-title {
+            margin-top: 30px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .note {
+            margin-top: 12px;
+            padding: 16px;
+            border-radius: 12px;
+            background: #f5f4f0;
+            color: #66665e;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <main class="app">
+        <div class="brand">damgio.</div>
+        <div class="subtitle">Sadakatin dijital hali.</div>
+
+        <section class="welcome">
+            <h1>Kahve molan hazır mı?</h1>
+            <p>Damgalarını biriktir, ödülünü kaçırma.</p>
+        </section>
+
+        <section class="card">
+            <div class="card-label">DİJİTAL DAMGA KARTIN</div>
+            <div class="coffee-name">Coffee House ☕</div>
+
+            <div class="stamps" id="stamps"></div>
+
+            <div class="progress" id="progress">
+                3 / 8 damga biriktirdin
+            </div>
+
+            <button class="button" onclick="addStamp()">
+                Örnek damga ekle
+            </button>
+        </section>
+
+        <div class="section-title">Nasıl çalışır?</div>
+        <div class="note">
+            İşletmeye QR kod ile bağlan, alışverişlerinde
+            damga biriktir ve yeterli sayıya ulaşınca ödülünü kazan.
+        </div>
+    </main>
+
+    <script>
+        let stampCount = 3;
+        const requiredStamps = 8;
+
+        function renderStamps() {
+            const container = document.getElementById("stamps");
+            container.innerHTML = "";
+
+            for (let i = 0; i < requiredStamps; i++) {
+                const stamp = document.createElement("div");
+                stamp.className = "stamp" +
+                    (i < stampCount ? " filled" : "");
+                stamp.textContent = i < stampCount ? "✓" : "·";
+                container.appendChild(stamp);
+            }
+
+            document.getElementById("progress").textContent =
+                stampCount + " / " + requiredStamps +
+                " damga biriktirdin";
+        }
+
+        function addStamp() {
+            if (stampCount < requiredStamps) {
+                stampCount++;
+                renderStamps();
+            } else {
+                alert("Tebrikler! Ödül kazandın. 🎉");
+            }
+        }
+
+        renderStamps();
+    </script>
+</body>
+</html>
