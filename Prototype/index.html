@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Damgio - Dijital Damga Kartı</title>
+    <title>Damgio | Giriş Yap</title>
+
     <style>
         * {
             box-sizing: border-box;
@@ -13,188 +14,238 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background: #f5f4f0;
-            color: #25251f;
+            background: #f4f3ee;
+            color: #243c32;
         }
 
         .app {
             width: 100%;
-            max-width: 390px;
+            max-width: 420px;
             min-height: 100vh;
             margin: auto;
-            padding: 28px 22px;
-            background: #ffffff;
+            padding: 32px 24px;
+            background: white;
         }
 
         .brand {
-            font-size: 28px;
-            font-weight: bold;
-            letter-spacing: -1px;
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -1.5px;
         }
 
-        .subtitle {
-            margin-top: 8px;
-            color: #77776f;
+        .tagline {
+            margin-top: 6px;
+            color: #777b73;
             font-size: 14px;
         }
 
         .welcome {
-            margin-top: 38px;
+            margin-top: 48px;
         }
 
         .welcome h1 {
-            margin-bottom: 8px;
-            font-size: 26px;
+            margin-bottom: 10px;
+            font-size: 29px;
         }
 
         .welcome p {
-            color: #77776f;
+            color: #777b73;
             line-height: 1.5;
         }
 
-        .card {
-            margin-top: 28px;
-            padding: 22px;
-            border-radius: 20px;
-            background: #243c32;
-            color: white;
-        }
-
-        .card-label {
-            font-size: 13px;
-            color: #d6e2d8;
-        }
-
-        .coffee-name {
-            margin-top: 10px;
-            font-size: 23px;
+        .label {
+            display: block;
+            margin: 25px 0 12px;
+            font-size: 14px;
             font-weight: bold;
         }
 
-        .stamps {
+        .roles {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin-top: 24px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 9px;
         }
 
-        .stamp {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 48px;
-            height: 48px;
-            border: 1px solid #91a69a;
-            border-radius: 50%;
-            font-size: 20px;
-        }
-
-        .stamp.filled {
-            background: #d8e5bd;
-            border-color: #d8e5bd;
+        .role {
+            padding: 15px 5px;
+            border: 1px solid #dedfd8;
+            border-radius: 13px;
+            background: white;
             color: #243c32;
+            cursor: pointer;
         }
 
-        .progress {
-            margin-top: 20px;
-            font-size: 13px;
-            color: #e1e9e0;
-        }
-
-        .button {
+        .role .symbol {
             display: block;
+            margin-bottom: 9px;
+            font-size: 25px;
+        }
+
+        .role .role-name {
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .role.active {
+            border: 2px solid #365b47;
+            background: #edf3e9;
+        }
+
+        .field-label {
+            display: block;
+            margin: 20px 0 8px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        input {
             width: 100%;
-            margin-top: 24px;
-            padding: 15px;
+            padding: 14px;
+            border: 1px solid #dedfd8;
+            border-radius: 10px;
+            font-size: 15px;
+        }
+
+        input:focus {
+            outline: 2px solid #b6c9b0;
+            border-color: #365b47;
+        }
+
+        .login-button {
+            width: 100%;
+            margin-top: 26px;
+            padding: 16px;
             border: none;
             border-radius: 12px;
-            background: #d8e5bd;
-            color: #243c32;
+            background: #294737;
+            color: white;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
         }
 
-        .section-title {
-            margin-top: 30px;
-            font-size: 18px;
-            font-weight: bold;
+        .message {
+            display: none;
+            margin-top: 18px;
+            padding: 14px;
+            border-radius: 10px;
+            background: #edf3e9;
+            line-height: 1.5;
+            font-size: 14px;
         }
 
-        .note {
-            margin-top: 12px;
-            padding: 16px;
-            border-radius: 12px;
-            background: #f5f4f0;
-            color: #66665e;
-            font-size: 14px;
+        .footnote {
+            margin-top: 28px;
+            color: #85877f;
+            font-size: 12px;
             line-height: 1.5;
+            text-align: center;
         }
     </style>
 </head>
+
 <body>
     <main class="app">
-        <div class="brand">damgio.</div>
-        <div class="subtitle">Sadakatin dijital hali.</div>
+        <header>
+            <div class="brand">damgio.</div>
+            <div class="tagline">Sadakatin dijital hali.</div>
+        </header>
 
         <section class="welcome">
-            <h1>Kahve molan hazır mı?</h1>
-            <p>Damgalarını biriktir, ödülünü kaçırma.</p>
+            <h1>Tekrar hoş geldin!</h1>
+            <p>Devam etmek için kullanıcı türünü seç ve giriş bilgilerini gir.</p>
         </section>
 
-        <section class="card">
-            <div class="card-label">DİJİTAL DAMGA KARTIN</div>
-            <div class="coffee-name">Coffee House ☕</div>
+        <form id="loginForm">
+            <label class="label">Nasıl devam etmek istiyorsun?</label>
 
-            <div class="stamps" id="stamps"></div>
+            <div class="roles">
+                <button type="button" class="role active"
+                    data-role="customer" aria-pressed="true">
+                    <span class="symbol">☕</span>
+                    <span class="role-name">Müşteri</span>
+                </button>
 
-            <div class="progress" id="progress">
-                3 / 8 damga biriktirdin
+                <button type="button" class="role"
+                    data-role="cashier" aria-pressed="false">
+                    <span class="symbol">🧾</span>
+                    <span class="role-name">Kasiyer</span>
+                </button>
+
+                <button type="button" class="role"
+                    data-role="admin" aria-pressed="false">
+                    <span class="symbol">🏪</span>
+                    <span class="role-name">İşletme</span>
+                </button>
             </div>
 
-            <button class="button" onclick="addStamp()">
-                Örnek damga ekle
-            </button>
-        </section>
+            <label class="field-label" for="email">E-posta adresi</label>
+            <input
+                type="email"
+                id="email"
+                placeholder="ornek@mail.com"
+                autocomplete="email"
+                required
+            >
 
-        <div class="section-title">Nasıl çalışır?</div>
-        <div class="note">
-            İşletmeye QR kod ile bağlan, alışverişlerinde
-            damga biriktir ve yeterli sayıya ulaşınca ödülünü kazan.
-        </div>
+            <label class="field-label" for="password">Şifre</label>
+            <input
+                type="password"
+                id="password"
+                placeholder="Şifreni gir"
+                autocomplete="current-password"
+                required
+            >
+
+            <button class="login-button" type="submit">Giriş yap</button>
+        </form>
+
+        <div class="message" id="message" role="status"></div>
+
+        <p class="footnote">
+            Damgio dijital sadakat kartı prototipi<br>
+            Bu ekranda gerçek kullanıcı doğrulaması yapılmaz.
+        </p>
     </main>
 
     <script>
-        let stampCount = 3;
-        const requiredStamps = 8;
+        let selectedRole = "customer";
 
-        function renderStamps() {
-            const container = document.getElementById("stamps");
-            container.innerHTML = "";
+        const roleButtons = document.querySelectorAll(".role");
+        const loginForm = document.getElementById("loginForm");
+        const message = document.getElementById("message");
 
-            for (let i = 0; i < requiredStamps; i++) {
-                const stamp = document.createElement("div");
-                stamp.className = "stamp" +
-                    (i < stampCount ? " filled" : "");
-                stamp.textContent = i < stampCount ? "✓" : "·";
-                container.appendChild(stamp);
-            }
+        roleButtons.forEach(function(button) {
+            button.addEventListener("click", function() {
+                roleButtons.forEach(function(item) {
+                    item.classList.remove("active");
+                    item.setAttribute("aria-pressed", "false");
+                });
 
-            document.getElementById("progress").textContent =
-                stampCount + " / " + requiredStamps +
-                " damga biriktirdin";
-        }
+                button.classList.add("active");
+                button.setAttribute("aria-pressed", "true");
 
-        function addStamp() {
-            if (stampCount < requiredStamps) {
-                stampCount++;
-                renderStamps();
-            } else {
-                alert("Tebrikler! Ödül kazandın. 🎉");
-            }
-        }
+                selectedRole = button.dataset.role;
+                message.style.display = "none";
+            });
+        });
 
-        renderStamps();
+        loginForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const roleNames = {
+                customer: "Müşteri",
+                cashier: "Kasiyer",
+                admin: "İşletme sahibi"
+            };
+
+            message.textContent =
+                roleNames[selectedRole] +
+                " rolünü seçtin. Giriş ekranı çalışıyor; " +
+                "gerçek hesap doğrulamasını sonraki aşamada ekleyeceğiz.";
+
+            message.style.display = "block";
+        });
     </script>
 </body>
 </html>

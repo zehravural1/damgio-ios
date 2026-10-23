@@ -22,4 +22,3 @@ Kâğıt damga kartlarını dijital ortama taşıyarak müşterilerin damgaları
 
 ## Geliştirme Durumu
 
-Proje geliştirme aşamasındadır.
