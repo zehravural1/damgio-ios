@@ -1,5 +1,5 @@
-
 import SwiftUI
+import SwiftData
 
 @main
 struct DamgioApp: App {
@@ -8,7 +8,13 @@ struct DamgioApp: App {
             NavigationStack {
                 WelcomeView()
             }
+            .modifier(SampleDataLoader())
         }
+        .modelContainer(for: [
+            Shop.self,
+            Program.self,
+            StampCard.self
+        ])
     }
 }
 
@@ -23,7 +29,7 @@ struct WelcomeView: View {
                 .font(.headline)
 
             NavigationLink("Devam et") {
-                RoleSelectionView()
+                DashboardView()
             }
             .buttonStyle(.borderedProminent)
         }
