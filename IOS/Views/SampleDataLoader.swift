@@ -1,10 +1,8 @@
-
-import SwiftUI
+﻿import SwiftUI
 import SwiftData
 
 struct SampleDataLoader: ViewModifier {
     @Environment(\.modelContext) private var context
-    @Query private var shops: [Shop]
 
     func body(content: Content) -> some View {
         content.task {

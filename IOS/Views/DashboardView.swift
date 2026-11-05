@@ -1,5 +1,4 @@
-
-import SwiftUI
+﻿import SwiftUI
 
 struct DashboardView: View {
     var body: some View {
@@ -17,5 +16,11 @@ struct DashboardView: View {
             }
         }
         .navigationTitle("Damgio Yönetimi")
+    }
+}
+
+#Preview {
+    NavigationStack {
+        DashboardView()
     }
 }

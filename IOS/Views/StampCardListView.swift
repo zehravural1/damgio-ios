@@ -1,5 +1,4 @@
-
-import SwiftUI
+﻿import SwiftUI
 import SwiftData
 
 struct StampCardListView: View {
@@ -18,9 +17,7 @@ struct StampCardListView: View {
 
                     Text("İşletme: \(program.shop?.name ?? "Belirtilmemiş")")
                         .font(.caption)
-                }
 
-                if let program = card.program {
                     Text(
                         "Damga: \(card.stampCount)/\(program.requiredStamps)"
                     )

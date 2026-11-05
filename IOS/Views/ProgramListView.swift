@@ -1,30 +1,50 @@
-
-import SwiftUI
+﻿import SwiftUI
 import SwiftData
 
 struct ProgramListView: View {
-    @Query(sort: \Program.name) private var programs: [Program]
+    @Environment(\.modelContext) private var context
+
+    @Query(sort: \Program.name)
+    private var programs: [Program]
 
     var body: some View {
-        List(programs) { program in
-            VStack(alignment: .leading, spacing: 6) {
-                Text(program.name)
-                    .font(.headline)
+        List {
+            ForEach(programs) { program in
+                NavigationLink {
+                    ProgramFormView(program: program)
+                } label: {
+                    VStack(alignment: .leading, spacing: 5) {
+                        Text(program.name)
+                            .font(.headline)
 
-                Text("Ödül: \(program.reward)")
-                    .font(.subheadline)
+                        Text("Damga: \(program.requiredStamps)")
 
-                Text("Gerekli damga: \(program.requiredStamps)")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                        Text("Ödül: \(program.reward)")
+                            .foregroundStyle(.secondary)
 
-                if let shop = program.shop {
-                    Text("İşletme: \(shop.name)")
-                        .font(.caption)
+                        Text("İşletme: \(program.shop?.name ?? "Belirtilmedi")")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                .swipeActions {
+                    Button(role: .destructive) {
+                        context.delete(program)
+                    } label: {
+                        Label("Sil", systemImage: "trash")
+                    }
                 }
             }
-            .padding(.vertical, 4)
         }
         .navigationTitle("Sadakat Programları")
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                NavigationLink {
+                    ProgramFormView()
+                } label: {
+                    Image(systemName: "plus")
+                }
+            }
+        }
     }
 }

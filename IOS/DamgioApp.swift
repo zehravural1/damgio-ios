@@ -1,4 +1,4 @@
-import SwiftUI
+﻿import SwiftUI
 import SwiftData
 
 @main
@@ -29,7 +29,7 @@ struct WelcomeView: View {
                 .font(.headline)
 
             NavigationLink("Devam et") {
-                DashboardView()
+                LoginView()
             }
             .buttonStyle(.borderedProminent)
         }
@@ -54,15 +54,31 @@ struct RoleSelectionView: View {
 struct RoleHomeView: View {
     let role: UserRole
 
+    @ViewBuilder
     var body: some View {
-        VStack(spacing: 12) {
-            Text(role.displayName)
-                .font(.title)
+        switch role {
+        case .admin:
+            DashboardView()
 
-            Text("Bu rolün ana ekranı daha sonra geliştirilecek.")
-                .multilineTextAlignment(.center)
+        case .cashier:
+            VStack(spacing: 12) {
+                Text("Kasiyer Paneli")
+                    .font(.title)
+
+                Text("Damga işlemleri burada yapılacak.")
+            }
+            .padding()
+            .navigationTitle("Kasiyer")
+
+        case .customer:
+            VStack(spacing: 12) {
+                Text("Müşteri Paneli")
+                    .font(.title)
+
+                Text("Sadakat kartların burada görüntülenecek.")
+            }
+            .padding()
+            .navigationTitle("Müşteri")
         }
-        .padding()
-        .navigationTitle(role.rawValue)
     }
 }
