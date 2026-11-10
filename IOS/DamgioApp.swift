@@ -61,24 +61,10 @@ struct RoleHomeView: View {
             DashboardView()
 
         case .cashier:
-            VStack(spacing: 12) {
-                Text("Kasiyer Paneli")
-                    .font(.title)
-
-                Text("Damga işlemleri burada yapılacak.")
-            }
-            .padding()
-            .navigationTitle("Kasiyer")
+    CashierStampView()
 
         case .customer:
-            VStack(spacing: 12) {
-                Text("Müşteri Paneli")
-                    .font(.title)
-
-                Text("Sadakat kartların burada görüntülenecek.")
-            }
-            .padding()
-            .navigationTitle("Müşteri")
+            StampCardListView()
         }
     }
 }

@@ -6,32 +6,62 @@ struct StampCardListView: View {
     private var cards: [StampCard]
 
     var body: some View {
-        List(cards) { card in
-            VStack(alignment: .leading, spacing: 6) {
-                Text(card.customerName)
-                    .font(.headline)
+        Group {
+            if cards.isEmpty {
+                ContentUnavailableView(
+                    "Henüz sadakat kartın yok",
+                    systemImage: "ticket",
+                    description: Text("Bir işletmenin sadakat programına katıldığında kartın burada görünecek.")
+                )
+            } else {
+                List(cards) { card in
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text(card.program?.shop?.name ?? "İşletme belirtilmemiş")
+                            .font(.headline)
 
-                if let program = card.program {
-                    Text(program.name)
-                        .font(.subheadline)
+                        Text(card.program?.name ?? "Program belirtilmemiş")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
 
-                    Text("İşletme: \(program.shop?.name ?? "Belirtilmemiş")")
-                        .font(.caption)
+                        if let program = card.program {
+                            VStack(alignment: .leading, spacing: 6) {
+                                HStack {
+                                    Text("Damgaların")
+                                    Spacer()
+                                    Text("\(card.stampCount)/\(program.requiredStamps)")
+                                        .fontWeight(.semibold)
+                                }
 
-                    Text(
-                        "Damga: \(card.stampCount)/\(program.requiredStamps)"
-                    )
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                                ProgressView(
+                                    value: Double(min(card.stampCount, program.requiredStamps)),
+                                    total: Double(max(program.requiredStamps, 1))
+                                )
+                            }
 
-                    ProgressView(
-                        value: Double(card.stampCount),
-                        total: Double(max(program.requiredStamps, 1))
-                    )
+                            if card.availableRewards > 0 {
+                                Label(
+                                    "\(card.availableRewards) kazanılmış ödül",
+                                    systemImage: "gift.fill"
+                                )
+                                .foregroundStyle(.green)
+
+                                Text(program.reward)
+                                    .font(.subheadline)
+                            } else {
+                                Text("Henüz kullanılabilir ödül yok.")
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
+
+                            Text("Toplam kazanılan damga: \(card.lifetimeStamps)")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    .padding(.vertical, 8)
                 }
             }
-            .padding(.vertical, 5)
         }
-        .navigationTitle("Müşteri Kartları")
+        .navigationTitle("Sadakat Kartlarım")
     }
 }

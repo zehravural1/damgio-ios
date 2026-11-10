@@ -17,11 +17,12 @@ enum SampleData {
             shop: shop
         )
 
-        let card = StampCard(
-            customerName: "Zehra",
-            stampCount: 3,
-            program: program
-        )
+       let card = StampCard(
+       customerName: "Zehra",
+       stampCount: 3,
+       lifetimeStamps: 3,
+       program: program
+)
 
         context.insert(shop)
         context.insert(program)
