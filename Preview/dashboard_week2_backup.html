@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Damgio Yönetimi</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#e9eeeb;font-family:Arial,sans-serif;color:#24372e}
+.phone{width:375px;min-height:720px;margin:35px auto;background:#fff;border:9px solid #222;border-radius:38px;overflow:hidden}
+.status{padding:17px 22px;display:flex;justify-content:space-between;font-size:13px}
+header{padding:25px 22px 20px;background:#174b38;color:white}
+header small{opacity:.75}
+header h1{margin:9px 0 0;font-size:26px}
+main{padding:22px}
+h2{font-size:17px;margin:0 0 15px}
+.item{display:flex;align-items:center;gap:15px;padding:19px 13px;border-bottom:1px solid #e8ece9;cursor:pointer}
+.symbol{width:43px;height:43px;border-radius:13px;background:#e8f2ec;display:grid;place-items:center;font-size:22px}
+.item strong{font-size:15px}
+.item small{display:block;color:#849087;margin-top:5px}
+.arrow{margin-left:auto;color:#87938b;font-size:22px}
+.detail{display:none;padding:20px}
+.back{border:0;background:#e8f2ec;padding:10px 16px;border-radius:9px;cursor:pointer}
+.detail h2{margin-top:25px}
+footer{text-align:center;padding:25px;color:#929b95;font-size:12px}
+@media(max-width:420px){.phone{margin:0 auto;width:100%;border-radius:0;border:0;min-height:100vh}}
+</style>
+</head>
+<body>
+<div class="phone">
+<div class="status"><b>9:41</b><span>● ● ● ▰</span></div>
+<header><small>DAMGIO • YÖNETİM PANELİ</small><h1>Damgio Yönetimi</h1></header>
+<main id="home">
+<h2>Yönetim menüsü</h2>
+<div class="item" onclick="openPage('İşletmeler','İşletme listesi burada görüntülenecek.')"><div class="symbol">🏪</div><div><strong>İşletmeler</strong><small>İşletmeleri görüntüle</small></div><span class="arrow">›</span></div>
+<div class="item" onclick="openPage('Sadakat Programları','Sadakat programları burada görüntülenecek.')"><div class="symbol">🎁</div><div><strong>Sadakat Programları</strong><small>Programları yönet</small></div><span class="arrow">›</span></div>
+<div class="item" onclick="openPage('Müşteri Kartları','Müşteri damga kartları burada görüntülenecek.')"><div class="symbol">💳</div><div><strong>Müşteri Kartları</strong><small>Damga kartlarını görüntüle</small></div><span class="arrow">›</span></div>
+</main>
+<section class="detail" id="detail"><button class="back" onclick="goBack()">← Geri</button><h2 id="pageTitle"></h2><p id="pageText"></p></section>
+<footer>Damgio • Dijital sadakat kartın</footer>
+</div>
+<script>
+function openPage(title,desc){document.getElementById('home').style.display='none';document.getElementById('detail').style.display='block';document.getElementById('pageTitle').textContent=title;document.getElementById('pageText').textContent=desc}
+function goBack(){document.getElementById('detail').style.display='none';document.getElementById('home').style.display='block'}
+</script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Damgio | Yönetim Paneli</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f6fa;color:#202536}
+button,input{font:inherit}
+button{cursor:pointer;border:0;border-radius:9px;padding:11px 16px;background:#6655d9;color:white}
+button:hover{opacity:.88}
+.secondary{background:#e9e7fa;color:#5143b5}
+.danger{background:#ffe8e8;color:#c03939}
+.login{min-height:100vh;display:grid;place-items:center;padding:20px}
+.login-card{background:white;padding:38px;border-radius:18px;width:100%;max-width:390px;box-shadow:0 8px 35px #18204412}
+.logo{font-size:32px;font-weight:bold;color:#6655d9;margin-bottom:10px}
+input{width:100%;padding:12px;border:1px solid #ddd;border-radius:8px;margin:7px 0 16px}
+label{font-size:13px;color:#555}
+.login-card button{width:100%;margin-top:8px}
+.app{display:none;min-height:100vh}
+.sidebar{width:245px;background:#20243a;color:white;padding:25px 16px;position:fixed;inset:0 auto 0 0}
+.sidebar .logo{color:white;margin:5px 12px 35px}
+.nav{display:block;width:100%;text-align:left;background:transparent;color:#d5d7e4;margin:5px 0}
+.nav.active,.nav:hover{background:#393d58;color:white}
+.main{margin-left:245px;padding:30px;max-width:1500px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px}
+h1{font-size:26px;margin:0 0 8px}
+.muted{color:#85899a;font-size:14px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:18px;margin:25px 0}
+.card,.panel{background:white;border-radius:14px;padding:22px;box-shadow:0 3px 15px #18204408}
+.card strong{font-size:29px;display:block;margin-top:12px}
+.panel{margin-top:20px}
+.panel-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:14px 10px;border-bottom:1px solid #eee;font-size:14px}
+th{color:#777;font-weight:500}
+.actions{display:flex;gap:7px}
+.actions button{padding:7px 10px;font-size:12px}
+.badge{background:#e9f7ee;color:#21834b;padding:5px 9px;border-radius:20px;font-size:12px}
+.page{display:none}
+.page.active{display:block}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.form-grid label{display:block}
+.form-actions{display:flex;gap:10px;margin-top:12px}
+.progress{height:9px;background:#eee;border-radius:8px;overflow:hidden;margin-top:8px}
+.progress span{display:block;height:100%;background:#6655d9}
+.empty{color:#888;padding:25px;text-align:center}
+@media(max-width:700px){
+ .sidebar{position:static;width:100%;padding:12px}
+ .sidebar .logo{margin:5px 10px}
+ .nav{display:inline-block;width:auto;padding:9px}
+ .main{margin:0;padding:18px}
+ .form-grid{grid-template-columns:1fr}
+ .top{align-items:flex-start;gap:12px;flex-direction:column}
+ .panel{overflow-x:auto}
+}
+</style>
+</head>
+<body>
+
+<section class="login" id="login">
+ <div class="login-card">
+  <div class="logo">damgio.</div>
+  <h2>Hoş geldin!</h2>
+  <p class="muted">Yönetim paneline giriş yap.</p>
+  <label>E-posta adresi</label>
+  <input id="email" type="email" placeholder="ornek@email.com">
+  <label>Şifre</label>
+  <input id="password" type="password" placeholder="Şifren">
+  <button onclick="login()">Giriş Yap</button>
+  <p class="muted" style="text-align:center;margin-top:18px">Demo arayüz – gerçek kullanıcı doğrulaması yoktur.</p>
+ </div>
+</section>
+
+<div class="app" id="app">
+ <aside class="sidebar">
+  <div class="logo">damgio.</div>
+  <button class="nav active" data-page="dashboard">⌂ &nbsp; Genel Bakış</button>
+  <button class="nav" data-page="shops">▣ &nbsp; İşletmeler</button>
+  <button class="nav" data-page="programs">★ &nbsp; Sadakat Programları</button>
+  <button class="nav" data-page="customers">♙ &nbsp; Müşteri Kartları</button>
+  <button class="nav" onclick="logout()" style="margin-top:35px">↪ &nbsp; Çıkış Yap</button>
+ </aside>
+
+ <main class="main">
+  <div class="top">
+   <div><h1 id="pageTitle">Genel Bakış</h1><span class="muted">Damgio Yönetim Paneli</span></div>
+   <span class="badge">İşletme Sahibi</span>
+  </div>
+
+  <section class="page active" id="dashboard">
+   <h2>Merhaba 👋</h2>
+   <p class="muted">İşletmelerini ve sadakat programlarını buradan yönetebilirsin.</p>
+   <div class="cards">
+    <div class="card">Toplam İşletme<strong id="shopCount">1</strong></div>
+    <div class="card">Sadakat Programı<strong id="programCount">1</strong></div>
+    <div class="card">Müşteri Kartı<strong id="customerCount">1</strong></div>
+   </div>
+   <div class="panel">
+    <h3>Hızlı İşlemler</h3>
+    <button onclick="showPage('shops')">İşletmeleri Yönet</button>
+    <button class="secondary" onclick="showPage('programs')">Programları Yönet</button>
+   </div>
+  </section>
+
+  <section class="page" id="shops">
+   <div class="panel">
+    <div class="panel-head"><h3>İşletmeler</h3><button onclick="shopForm()">+ Yeni İşletme</button></div>
+    <table><thead><tr><th>İşletme Adı</th><th>Adres</th><th>İşlemler</th></tr></thead><tbody id="shopRows"></tbody></table>
+   </div>
+  </section>
+
+  <section class="page" id="programs">
+   <div class="panel">
+    <div class="panel-head"><h3>Sadakat Programları</h3><button onclick="programForm()">+ Yeni Program</button></div>
+    <table><thead><tr><th>Program</th><th>Damga</th><th>Ödül</th><th>İşletme</th><th>İşlemler</th></tr></thead><tbody id="programRows"></tbody></table>
+   </div>
+  </section>
+
+  <section class="page" id="customers">
+   <div class="panel">
+    <h3>Müşteri Kartları</h3>
+    <div id="customerRows"></div>
+   </div>
+  </section>
+ </main>
+</div>
+
+<script>
+let shops=[{name:"Coffee House",address:"Ankara"}];
+let programs=[{name:"Kahve Sadakat Programı",stamps:10,reward:"1 ücretsiz kahve",shop:"Coffee House"}];
+let customers=[{name:"Zehra",count:3,program:"Kahve Sadakat Programı"}];
+
+function login(){
+ document.getElementById("login").style.display="none";
+ document.getElementById("app").style.display="block";
+ render();
+}
+function logout(){
+ document.getElementById("app").style.display="none";
+ document.getElementById("login").style.display="grid";
+}
+function showPage(name){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ document.getElementById(name).classList.add("active");
+ document.querySelectorAll(".nav[data-page]").forEach(b=>b.classList.toggle("active",b.dataset.page===name));
+ const titles={dashboard:"Genel Bakış",shops:"İşletmeler",programs:"Sadakat Programları",customers:"Müşteri Kartları"};
+ document.getElementById("pageTitle").textContent=titles[name];
+}
+document.querySelectorAll(".nav[data-page]").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.page)));
+
+function render(){
+ document.getElementById("shopCount").textContent=shops.length;
+ document.getElementById("programCount").textContent=programs.length;
+ document.getElementById("customerCount").textContent=customers.length;
+
+ document.getElementById("shopRows").innerHTML=shops.map((s,i)=>`
+ <tr><td>${esc(s.name)}</td><td>${esc(s.address)}</td><td><div class="actions">
+ <button class="secondary" onclick="shopForm(${i})">Düzenle</button>
+ <button class="danger" onclick="deleteShop(${i})">Sil</button></div></td></tr>`).join("")||'<tr><td colspan="3" class="empty">Henüz işletme yok.</td></tr>';
+
+ document.getElementById("programRows").innerHTML=programs.map((p,i)=>`
+ <tr><td>${esc(p.name)}</td><td>${p.stamps}</td><td>${esc(p.reward)}</td><td>${esc(p.shop)}</td><td><div class="actions">
+ <button class="secondary" onclick="programForm(${i})">Düzenle</button>
+ <button class="danger" onclick="deleteProgram(${i})">Sil</button></div></td></tr>`).join("")||'<tr><td colspan="5" class="empty">Henüz program yok.</td></tr>';
+
+ document.getElementById("customerRows").innerHTML=customers.map(c=>{
+ let p=programs.find(x=>x.name===c.program);
+ let total=p?p.stamps:10;
+ return `<div class="card" style="margin:12px 0"><b>${esc(c.name)}</b><p class="muted">${esc(c.program)}</p><span>${c.count}/${total} damga</span><div class="progress"><span style="width:${Math.min(100,c.count/total*100)}%"></span></div></div>`;
+ }).join("")||'<p class="empty">Henüz müşteri kartı yok.</p>';
+}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+
+function shopForm(i){
+ let old=i===undefined?{name:"",address:""}:shops[i];
+ let name=prompt("İşletme adı:",old.name); if(name===null)return;
+ let address=prompt("Adres:",old.address); if(address===null)return;
+ if(!name.trim()||!address.trim()){alert("İki alan da zorunludur.");return;}
+ if(i===undefined)shops.push({name,address});else shops[i]={name,address};
+ render();
+}
+function deleteShop(i){
+ if(!confirm("Bu işletmeyi silmek istiyor musun?"))return;
+ shops.splice(i,1);render();
+}
+function programForm(i){
+ let old=i===undefined?{name:"",stamps:10,reward:"",shop:shops[0]?.name||""}:programs[i];
+ let name=prompt("Program adı:",old.name);if(name===null)return;
+ let stamps=prompt("Gerekli damga sayısı:",old.stamps);if(stamps===null)return;
+ let reward=prompt("Ödül:",old.reward);if(reward===null)return;
+ let shop=prompt("İşletme adı:",old.shop);if(shop===null)return;
+ if(!name.trim()||!reward.trim()||!Number.isInteger(Number(stamps))||Number(stamps)<1){alert("Bilgileri kontrol et.");return;}
+ let item={name,stamps:Number(stamps),reward,shop};
+ if(i===undefined)programs.push(item);else programs[i]=item;
+ render();
+}
+function deleteProgram(i){
+ if(!confirm("Bu programı silmek istiyor musun?"))return;
+ programs.splice(i,1);render();
+}
+render();
+</script>
+</body>
+</html>
