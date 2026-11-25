@@ -1,0 +1,167 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Damgio | Week 4 Demo</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f4f5f7;color:#252a35;font-family:Segoe UI,Arial,sans-serif}
+header{background:#202b3c;color:white;padding:22px 7%;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:25px;font-weight:800;letter-spacing:1px}
+.logo span{color:#f4b85b}
+header small{color:#c5ceda}
+main{max-width:1050px;margin:35px auto;padding:0 20px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+h1{margin:0;font-size:27px}
+.muted{color:#778191;font-size:14px}
+.tabs{display:flex;gap:8px}
+button{border:0;border-radius:9px;padding:12px 18px;font-weight:650;cursor:pointer}
+.tab{background:white;color:#485366}
+.tab.active{background:#26364d;color:white}
+.layout{display:grid;grid-template-columns:1.2fr .8fr;gap:20px;margin-top:25px}
+.panel{background:white;border-radius:16px;padding:25px;box-shadow:0 5px 22px #1824380c}
+.panel h2{font-size:18px;margin:0 0 20px}
+.card{background:linear-gradient(135deg,#24364e,#435c78);color:white;border-radius:17px;padding:25px;min-height:245px}
+.card-top{display:flex;justify-content:space-between;align-items:center}
+.chip{background:#ffffff22;padding:7px 11px;border-radius:20px;font-size:12px}
+.customer{font-size:23px;font-weight:700;margin-top:25px}
+.program{color:#d8e0e9;margin-top:5px;font-size:14px}
+.progress{display:grid;grid-template-columns:repeat(10,1fr);gap:7px;margin:23px 0 12px}
+.stamp{height:28px;border:1px solid #ffffff80;border-radius:50%;display:grid;place-items:center;font-size:13px}
+.stamp.filled{background:#f4b85b;color:#24364e;border-color:#f4b85b}
+.card-bottom{display:flex;justify-content:space-between;font-size:13px;color:#e0e6ed}
+.reward{margin-top:17px;background:#fff8eb;border:1px solid #f4dfb7;padding:15px;border-radius:12px;color:#76521d}
+.reward strong{display:block;margin-bottom:5px}
+.stat{display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid #edf0f3;font-size:14px}
+.stat b{color:#26364d}
+.action{width:100%;background:#26364d;color:white;margin-top:12px}
+.action.gold{background:#d99b3d;color:#202b3c}
+.action:disabled{opacity:.4;cursor:not-allowed}
+.status{margin-top:17px;padding:13px;border-radius:10px;background:#eef4fa;color:#3c5977;font-size:13px;line-height:1.5}
+.history{margin-top:20px}
+.history-item{padding:10px 0;border-bottom:1px solid #edf0f3;font-size:13px;color:#667184}
+.hidden{display:none}
+.footer{text-align:center;color:#8993a1;font-size:12px;margin:25px}
+@media(max-width:700px){.layout{grid-template-columns:1fr}header{padding:18px}.top{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<header>
+ <div class="logo">DAM<span>GIO</span></div>
+ <small>WEEK 04 · DIGITAL LOYALTY SYSTEM</small>
+</header>
+<main>
+ <div class="top">
+  <div><h1>Sadakat Kartı Yönetimi</h1><p class="muted">Müşteri damgaları ve ödül işlemleri</p></div>
+  <div class="tabs">
+   <button class="tab active" id="cashierTab" onclick="setRole('cashier')">Kasiyer</button>
+   <button class="tab" id="customerTab" onclick="setRole('customer')">Müşteri</button>
+  </div>
+ </div>
+ <div class="layout">
+  <section class="panel">
+   <h2 id="viewTitle">Kasiyer Paneli</h2>
+   <div class="card">
+    <div class="card-top"><b>DAMGIO COFFEE</b><span class="chip">DIGITAL CARD</span></div>
+    <div class="customer" id="customerName">Zehra Vural</div>
+    <div class="program" id="programName">Kahve Sadakat Programı</div>
+    <div class="progress" id="progress"></div>
+    <div class="card-bottom"><span id="stampText">9 / 10 DAMGA</span><span>LOYALTY CARD</span></div>
+   </div>
+   <div class="reward" id="rewardBox">
+    <strong>☕ Ödül</strong>
+    <span>10 damgada 1 ücretsiz kahve</span>
+   </div>
+   <div class="status" id="status">Kasiyer görünümündesiniz. Müşteriye damga ekleyebilirsiniz.</div>
+  </section>
+  <section class="panel">
+   <h2>Hesap Bilgileri</h2>
+   <div class="stat"><span>Müşteri</span><b>Zehra Vural</b></div>
+   <div class="stat"><span>Mevcut damga</span><b id="current">9 / 10</b></div>
+   <div class="stat"><span>Toplam kazanılan damga</span><b id="lifetime">9</b></div>
+   <div class="stat"><span>Kullanılabilir ödül</span><b id="rewards">0</b></div>
+   <div id="cashierActions">
+    <button class="action" id="addBtn" onclick="addStamp()">＋ Damga Ekle</button>
+    <button class="action gold" id="redeemBtn" onclick="redeem()">Ödülü Kullandır</button>
+   </div>
+   <div class="history">
+    <h2>İşlem Bilgisi</h2>
+    <div id="history" class="history-item">Başlangıç kartı: 9 damga</div>
+   </div>
+  </section>
+ </div>
+ <div class="footer">Damgio iOS · Week 4 Demonstration · Local Browser Prototype</div>
+</main>
+<script>
+const requiredStamps=10;
+const rewardName="1 ücretsiz kahve";
+let stampCount=9;
+let lifetimeStamps=9;
+let availableRewards=0;
+let role="cashier";
+function render(){
+ const p=document.getElementById("progress");
+ p.innerHTML="";
+ for(let i=0;i<requiredStamps;i++){
+  const s=document.createElement("div");
+  s.className="stamp"+(i<stampCount?" filled":"");
+  s.textContent=i<stampCount?"✓":i+1;
+  p.appendChild(s);
+ }
+ document.getElementById("stampText").textContent=stampCount+" / "+requiredStamps+" DAMGA";
+ document.getElementById("current").textContent=stampCount+" / "+requiredStamps;
+ document.getElementById("lifetime").textContent=lifetimeStamps;
+ document.getElementById("rewards").textContent=availableRewards;
+ document.getElementById("rewardBox").innerHTML="<strong>☕ Ödül</strong><span>"+rewardName+"</span>";
+ document.getElementById("addBtn").disabled=stampCount>=requiredStamps;
+ document.getElementById("redeemBtn").disabled=availableRewards<=0;
+ document.getElementById("cashierActions").classList.toggle("hidden",role!=="cashier");
+ document.getElementById("viewTitle").textContent=role==="cashier"?"Kasiyer Paneli":"Müşteri Kartım";
+ document.getElementById("cashierTab").classList.toggle("active",role==="cashier");
+ document.getElementById("customerTab").classList.toggle("active",role==="customer");
+}
+function log(message){
+ const h=document.getElementById("history");
+ const item=document.createElement("div");
+ item.className="history-item";
+ item.textContent=new Date().toLocaleTimeString("tr-TR")+" · "+message;
+ h.prepend(item);
+}
+function addStamp(){
+ if(stampCount>=requiredStamps){
+  document.getElementById("status").textContent="Yeni damga eklenemedi. Önce kazanılan ödül kullanılmalı.";
+  return;
+ }
+ stampCount++;
+ lifetimeStamps++;
+ if(stampCount===requiredStamps){
+  availableRewards++;
+  document.getElementById("status").textContent="Tebrikler! Gerekli damga sayısına ulaşıldı. 1 ödül kazanıldı.";
+  log("10/10 damga tamamlandı · Ödül kazanıldı");
+ }else{
+  document.getElementById("status").textContent="Damga başarıyla eklendi. Kart "+stampCount+"/"+requiredStamps+" oldu.";
+  log("Yeni damga eklendi · "+stampCount+"/"+requiredStamps);
+ }
+ render();
+}
+function redeem(){
+ if(availableRewards<=0){
+  document.getElementById("status").textContent="Kullanılabilecek ödül bulunmuyor.";
+  return;
+ }
+ availableRewards--;
+ stampCount=0;
+ document.getElementById("status").textContent="Ödül kullanıldı. Kartın mevcut damgaları sıfırlandı. Toplam kazanılan damga korundu.";
+ log("Ödül kullanıldı · Kart yeni döneme başladı");
+ render();
+}
+function setRole(next){
+ role=next;
+ document.getElementById("status").textContent=next==="cashier"?"Kasiyer görünümündesiniz. Damga ekleyebilir ve ödül kullandırabilirsiniz.":"Müşteri görünümündesiniz. Kartınızı ve ödül durumunuzu inceleyebilirsiniz.";
+ render();
+}
+render();
+</script>
+</body>
+</html>

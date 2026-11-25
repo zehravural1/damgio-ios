@@ -2,8 +2,20 @@
 import SwiftData
 
 struct StampCardListView: View {
-    @Query(sort: \StampCard.customerName)
-    private var cards: [StampCard]
+    @Query private var cards: [StampCard]
+
+    init(customerEmail: String) {
+        let normalizedEmail = customerEmail
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .lowercased()
+
+        _cards = Query(
+            filter: #Predicate<StampCard> { card in
+                card.customerEmail == normalizedEmail
+            },
+            sort: [SortDescriptor(\StampCard.customerName)]
+        )
+    }
 
     var body: some View {
         Group {
@@ -11,7 +23,7 @@ struct StampCardListView: View {
                 ContentUnavailableView(
                     "Henüz sadakat kartın yok",
                     systemImage: "ticket",
-                    description: Text("Bir işletmenin sadakat programına katıldığında kartın burada görünecek.")
+                    description: Text("Bu e-posta adresine bağlı kart bulunamadı.")
                 )
             } else {
                 List(cards) { card in
@@ -24,19 +36,17 @@ struct StampCardListView: View {
                             .foregroundStyle(.secondary)
 
                         if let program = card.program {
-                            VStack(alignment: .leading, spacing: 6) {
-                                HStack {
-                                    Text("Damgaların")
-                                    Spacer()
-                                    Text("\(card.stampCount)/\(program.requiredStamps)")
-                                        .fontWeight(.semibold)
-                                }
-
-                                ProgressView(
-                                    value: Double(min(card.stampCount, program.requiredStamps)),
-                                    total: Double(max(program.requiredStamps, 1))
-                                )
+                            HStack {
+                                Text("Damgaların")
+                                Spacer()
+                                Text("\(card.stampCount)/\(program.requiredStamps)")
+                                    .fontWeight(.semibold)
                             }
+
+                            ProgressView(
+                                value: Double(min(card.stampCount, program.requiredStamps)),
+                                total: Double(max(program.requiredStamps, 1))
+                            )
 
                             if card.availableRewards > 0 {
                                 Label(

@@ -1,5 +1,4 @@
-
-import Foundation
+﻿import Foundation
 
 enum UserRole: String, CaseIterable, Identifiable {
     case admin = "Admin"
@@ -21,4 +20,3 @@ enum UserRole: String, CaseIterable, Identifiable {
         }
     }
 }
-git status

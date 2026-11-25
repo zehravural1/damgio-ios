@@ -39,10 +39,15 @@ struct WelcomeView: View {
 }
 
 struct RoleSelectionView: View {
+    let customerEmail: String
+
     var body: some View {
         List(UserRole.allCases) { role in
             NavigationLink {
-                RoleHomeView(role: role)
+                RoleHomeView(
+                    role: role,
+                    customerEmail: customerEmail
+                )
             } label: {
                 Text(role.displayName)
             }
@@ -53,6 +58,7 @@ struct RoleSelectionView: View {
 
 struct RoleHomeView: View {
     let role: UserRole
+    let customerEmail: String
 
     @ViewBuilder
     var body: some View {
@@ -61,10 +67,10 @@ struct RoleHomeView: View {
             DashboardView()
 
         case .cashier:
-    CashierStampView()
+            CashierStampView()
 
         case .customer:
-            StampCardListView()
+            StampCardListView(customerEmail: customerEmail)
         }
     }
 }
